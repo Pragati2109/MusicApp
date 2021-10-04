@@ -4,6 +4,8 @@ import 'package:credicxo_task_music_app/track_details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'helper/internet_Connectivity.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -27,9 +29,17 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   Future<List<MusicModel>> fetchTrackList;
 
+  void getHomeData(){
+    print("This is callback");
+    setState(() {
+      fetchTrackList = MusicTrackerController().fetchTrackingList();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    CheckInternet().isInternet(context,getHomeData);
     fetchTrackList = MusicTrackerController().fetchTrackingList();
   }
 
@@ -91,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
         Expanded(
           child: Container(
             alignment: Alignment.topCenter,
-            padding: EdgeInsets.only(left: 4, right: 4),
+            padding: EdgeInsets.only(left: 3, right: 3),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -137,4 +147,5 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
     );
   }
+
 }
